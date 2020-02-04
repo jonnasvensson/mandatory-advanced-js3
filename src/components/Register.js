@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { token$, updateToken } from './Store';
+import { Link } from 'react-router-dom';
 
+import Header from './Header'
 import Form from './Form'
+
 
 const API_ROOT = "http://3.120.96.16:3002/";
 
@@ -15,6 +18,7 @@ export default class Register extends React.Component {
         this.state = {
             email: "",
             password: "",
+            error: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,6 +37,7 @@ export default class Register extends React.Component {
         })
         .catch(err => {
             console.log(err);
+            this.setState({ error: true })
         })
     }
 
@@ -51,6 +56,10 @@ export default class Register extends React.Component {
     }
 
     render() {
+        let error;
+        if (this.state.error) {
+            error = <p style={{ color: "red" }}>Somethins went wrong, pls try again</p>
+        }
         return (
             <div>
                 <div>
@@ -58,11 +67,17 @@ export default class Register extends React.Component {
                         <title>Register</title>
                     </Helmet>
                 </div>
+                <Header 
+                headerText="Todo"/>
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     submitButtonText="Register"
                 />
+                <div>
+                    <p>Already have an account <Link to='/login'>click here</Link></p>
+                </div>
+                {error}
             </div>
         )
     }

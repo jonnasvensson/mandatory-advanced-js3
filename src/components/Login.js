@@ -4,7 +4,9 @@ import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { token$, updateToken } from './Store';
 import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
+import Header from './Header'
 import Form from './Form'
 
 const API_ROOT = "http://3.120.96.16:3002/";
@@ -16,12 +18,13 @@ export default class Login extends React.Component {
             email: "",
             password: "",
             token: token$.value,
-            error: false
-
+            error: false,
+            redirectRegister: false,
         }
         this.getAxios = this.getAxios.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClickRegister = this.handleClickRegister.bind(this);
     }
 
     componentDidMount() {
@@ -57,6 +60,11 @@ export default class Login extends React.Component {
 
         this.setState({ [name]: value });
     }
+    handleClickRegister() {
+        console.log('Reg clicked');
+
+        this.setState({ redirectRegister: true })
+    }
     handleSubmit(e) {
         e.preventDefault();
         this.getAxios();
@@ -71,6 +79,7 @@ export default class Login extends React.Component {
                         <title>Log in</title>
                     </Helmet>
                 </div>
+                <Header headerText="Todo" />
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
@@ -78,21 +87,11 @@ export default class Login extends React.Component {
                     submitButtonText="Log in"
                 />
                 {this.state.token && <Redirect to='/' />}
-                {!this.state.error && <p>Invalid login, pls try again!</p>}
+                {this.state.error && <p>Invalid login, pls try again!</p>}
+                <div>
+                    <p><Link to='/register'>Click here </Link>to register</p>
+                </div>
             </div>
         )
     }
 }
-
-
-
-
-
-/*  styling!
-const InputButton = styled.input`
-    width: 100px;
-    background-color: pink;
-    :hover {
-        background-color: rebeccapurple;
-    }
-`; */

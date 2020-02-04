@@ -1,5 +1,19 @@
 import React from 'react';
 import jwt from 'jsonwebtoken';
+import styled from 'styled-components';
+
+const H2inHeader = styled.h1`
+    font-family: 'Zhi Mang Xing', cursive;
+    font-size: 80px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: #FAB436;
+`;
+
+const PinHeader = styled.p`
+    font-family: 'Caveat', cursive;
+    font-size: 30px;
+`;
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -10,13 +24,11 @@ export default class Header extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.token);
         if (this.props.token) {
             let decoded = jwt.decode(this.props.token);
             console.log(decoded);
             this.setState({
                 decodedEmail: decoded.email,
-                tokenTime: decoded.iat - decoded.exp,
             })
         }
     }
@@ -24,8 +36,8 @@ export default class Header extends React.Component {
     render() {
         return (
             <div>
-                <h2>Hello labb 3</h2>
-                <p>{this.state.decodedEmail}</p>
+                <H2inHeader>{this.props.headerText}</H2inHeader>
+                <PinHeader>{this.state.decodedEmail}</PinHeader>
             </div >
         )
     }
