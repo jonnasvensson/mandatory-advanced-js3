@@ -34,7 +34,7 @@ const Button = styled.button`
     :hover {
         cursor: pointer;
     }
-`; 
+`;
 const ButtonAdd = styled.button`
     width: 100px;
     height: 30px;
@@ -46,7 +46,26 @@ const ButtonAdd = styled.button`
     :hover {
         cursor: pointer;
     }
-`; 
+`;
+
+const LogOutDiv = styled.div`
+    height: 150px;
+    display: flex;
+    justify-content: center;
+`;
+const ButtonRegLogin = styled.button`
+    width: 100px;
+    height: 30px;
+    border-radius: 8px;
+    margin: 20px;
+    background-color: #E3B427;
+    border-style: double;
+    font-family: 'Patrick Hand', cursive;
+    :hover {
+        cursor: pointer;
+    }
+`;
+
 //<---Styling ending--->
 
 export default class Home extends React.Component {
@@ -113,7 +132,7 @@ export default class Home extends React.Component {
                 console.log(resp.data.todo);
                 this.getAxios();
             })
-            .catch(err => 
+            .catch(err =>
                 console.log(err))
     }
 
@@ -121,14 +140,14 @@ export default class Home extends React.Component {
         console.log(e.target.value);
         this.setState({ content: e.target.value })
     }
-    handleSubmit(e) {
-        e.preventDefault();
-        this.postAxios();
-        this.setState({ content: ""})
-    }
     handleLogout() {
         updateToken(null);
         this.setState({ redirect: true });
+    }
+    handleSubmit(e) {
+        e.preventDefault();
+        this.postAxios();
+        this.setState({ content: "" })
     }
 
     render() {
@@ -139,7 +158,7 @@ export default class Home extends React.Component {
                         <title>Home</title>
                     </Helmet>
                 </div>
-                <Header 
+                <Header
                     headerText="Todos "
                     token={this.state.token} />
                 <form onSubmit={this.handleSubmit}>
@@ -150,12 +169,12 @@ export default class Home extends React.Component {
                     <ButtonAdd type="submit">Add todo</ButtonAdd>
                 </form>
                 <TodoList
-                    todoList={this.state.todoList} 
-                    deleteAxios={this.deleteAxios}/>
-                <div>
+                    todoList={this.state.todoList}
+                    deleteAxios={this.deleteAxios} />
+                <LogOutDiv>
                     <Button onClick={this.handleLogout}>Log out</Button>
-                    {this.state.redirect && <Redirect to='/login' />}
-                </div>
+                    {this.state.redirect && <Redirect to='/' />}
+                </LogOutDiv>
             </div>
         )
     }

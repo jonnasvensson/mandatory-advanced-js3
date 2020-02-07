@@ -1,10 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { token$, updateToken } from './Store';
 import { Redirect } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import Header from './Header'
 import Form from './Form'
@@ -20,6 +19,7 @@ export default class Login extends React.Component {
             token: token$.value,
             error: false,
             redirectRegister: false,
+            login: true,
         }
         this.getAxios = this.getAxios.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -32,7 +32,6 @@ export default class Login extends React.Component {
             this.setState({ token });
         });
     }
-
     componentWillUnmount() {
         this.subscription.unsubscribe();
     }
@@ -62,7 +61,6 @@ export default class Login extends React.Component {
     }
     handleClickRegister() {
         console.log('Reg clicked');
-
         this.setState({ redirectRegister: true })
     }
     handleSubmit(e) {
@@ -72,6 +70,7 @@ export default class Login extends React.Component {
     }
 
     render() {
+        console.log(this.state.login);
         return (
             <div>
                 <div>
@@ -79,18 +78,17 @@ export default class Login extends React.Component {
                         <title>Log in</title>
                     </Helmet>
                 </div>
-                <Header headerText="Todo" />
+                <Header 
+                headerText="Todo" />
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     email={this.state.email}
                     submitButtonText="Log in"
                 />
-                {this.state.token && <Redirect to='/' />}
+                {this.state.token && <Redirect to='/todopage' />}
                 {this.state.error && <p>Invalid login, pls try again!</p>}
-                <div>
-                    <p><Link to='/register'>Click here </Link>to register</p>
-                </div>
+                <p onClick={this.handleClick}><Link to='/register'>Click here </Link>to register</p>
             </div>
         )
     }

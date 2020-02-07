@@ -1,9 +1,8 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Helmet } from 'react-helmet';
 import axios from 'axios';
 import { token$, updateToken } from './Store';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import Header from './Header'
 import Form from './Form'
@@ -18,6 +17,7 @@ export default class Register extends React.Component {
         this.state = {
             email: "",
             password: "",
+            register: false,
             error: false,
         }
         this.handleChange = this.handleChange.bind(this);
@@ -34,9 +34,11 @@ export default class Register extends React.Component {
         })
         .then((response) => {
             console.log(response.status);
+            this.setState({ redirect: true })
         })
         .catch(err => {
-            console.log(err);
+            let errorMessage = err.response;
+            console.log(errorMessage);
             this.setState({ error: true })
         })
     }
@@ -53,13 +55,18 @@ export default class Register extends React.Component {
         e.preventDefault();
         console.log('Button clicked');
         this.handleAxios();
+        if (this.state.register) {
+            return <Redirect to="/login" />
+        }
     }
 
-    render() {
+    render() {        
         let error;
         if (this.state.error) {
-            error = <p style={{ color: "red" }}>Somethins went wrong, pls try again</p>
-        }
+            error = <p style={{ color: "red" }}>Something went wrong, pls try again!<br/>
+                                                This email might already exist?<br/>
+                                                </p>
+        }  
         return (
             <div>
                 <div>
@@ -75,23 +82,12 @@ export default class Register extends React.Component {
                     submitButtonText="Register"
                 />
                 <div>
-                    <p>Already have an account <Link to='/login'>click here</Link></p>
                 </div>
                 {error}
+                <p onClick={this.handleClick}>Already have an account <Link to='/'>click here</Link></p>
             </div>
         )
     }
 }
 
 
-
-
-
-/*  styling!
-const InputButton = styled.input`
-    width: 100px;
-    background-color: pink;
-    :hover {
-        background-color: rebeccapurple;
-    }
-`; */

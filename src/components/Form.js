@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Header from './Header'
 
 
 //<---Styling--->
@@ -31,33 +32,35 @@ const InputField = styled.input`
 
 export default function Form(props) {
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Inputfield
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    required
-                    min="1"
-                    value={props.email}
-                    onChange={props.handleChange}
-                />
-            </div>
-            <div>
-                <Inputfield
-                    placeholder="Password"
-                    type="password"
-                    name="password"
-                    required
-                    min="1"
-                    value={props.password}
-                    onChange={props.handleChange}
-                />
-            </div>
-            <InputField
-                type="submit"
-                value={props.submitButtonText} />
-        </form>
+        <>
+            <form onSubmit={props.handleSubmit}>
+                <div>
+                    <Inputfield
+                        placeholder="Email"
+                        type="email"
+                        name="email"
+                        required
+                        min="1"
+                        value={props.email}
+                        onChange={props.handleChange}
+                    />
+                </div>
+                <div>
+                    <Inputfield
+                        placeholder="Password"
+                        type="password"
+                        name="password"
+                        required
+                        min="1"
+                        value={props.password}
+                        onChange={props.handleChange}
+                    />
+                </div>
+                <InputField
+                    type="submit"
+                    value={props.submitButtonText} />
+            </form>
+        </>
     )
 }
 

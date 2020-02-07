@@ -3,7 +3,8 @@ import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import styled from 'styled-components';
 
-import StartPage from './components/StartPage'
+
+import { token$ } from './components/Store';
 import Login from './components/Login'
 import Register from './components/Register'
 import TodoPage from './components/TodoPage'
@@ -17,7 +18,7 @@ const DivContainer = styled.div`
 const DivApp = styled.div`
   margin-top: 20px;
   width: 400px;
-  height: 500px;
+  height: 600px;
   border: 2px #FDDE2B;
   border-style: dashed;
   border-width: 0 0px 8px 8px;
@@ -26,15 +27,36 @@ const DivApp = styled.div`
 //<---Styling ends--->
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      token: token$.value,
+    };
+  }
+
+  componentDidMount() {
+    this.subscription = token$.subscribe(token => {
+        this.setState({ token });
+    });
+}
+componentWillUnmount() {
+    this.subscription.unsubscribe();
+}
+
   render() {
     return (
       <DivContainer >
         <DivApp>
           <Router>
-            <Route path="/startpage" component={StartPage} />
-            <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route exact path="/" component={TodoPage} />
+            <Route exact path="/" render={(props) => {  //  render är funktion som vi skapar och skickar med props.
+              if (this.state.token) {
+                return <TodoPage {...props} />; 
+              } else {
+                return <Login {...props} />
+              }
+            }} />
           </Router>
         </DivApp>
       </DivContainer>

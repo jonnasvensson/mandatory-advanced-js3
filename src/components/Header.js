@@ -2,6 +2,7 @@ import React from 'react';
 import jwt from 'jsonwebtoken';
 import styled from 'styled-components';
 
+//<---Styling--->
 const H2inHeader = styled.h1`
     font-family: 'Zhi Mang Xing', cursive;
     font-size: 80px;
@@ -9,18 +10,20 @@ const H2inHeader = styled.h1`
     margin-bottom: 20px;
     color: #FAB436;
 `;
-
 const PinHeader = styled.p`
     font-family: 'Caveat', cursive;
     font-size: 30px;
 `;
+//<---Styling ending--->
 
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             decodedEmail: "",
+            login: false,
         }
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -31,6 +34,9 @@ export default class Header extends React.Component {
                 decodedEmail: decoded.email,
             })
         }
+    }
+    handleClick(e) {        
+        this.setState({ login: true })
     }
 
     render() {
