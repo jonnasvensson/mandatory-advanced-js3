@@ -31,7 +31,7 @@ const ButtonDelete = styled.button`
 export default function TodoList(props) {
 
     const todoList = props.todoList.map(todo => {
-        return <Li key={todo.id}>{todo.content}
+        return <Li key={todo.id}>{todo.content.charAt(0).toUpperCase() + todo.content.slice(1)}
             <ButtonDelete onClick={() => props.deleteAxios(todo.id)}>Delete</ButtonDelete>
         </Li>
     })

@@ -60,17 +60,14 @@ export default class Login extends React.Component {
         this.setState({ [name]: value });
     }
     handleClickRegister() {
-        console.log('Reg clicked');
         this.setState({ redirectRegister: true })
     }
     handleSubmit(e) {
         e.preventDefault();
         this.getAxios();
-        console.log('Button clicked');
     }
 
     render() {
-        console.log(this.state.login);
         return (
             <div>
                 <div>

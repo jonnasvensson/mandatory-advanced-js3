@@ -137,7 +137,6 @@ export default class Home extends React.Component {
     }
 
     handleChange(e) {
-        console.log(e.target.value);
         this.setState({ content: e.target.value })
     }
     handleLogout() {
@@ -179,6 +178,7 @@ export default class Home extends React.Component {
         )
     }
 }
+
 
 
 
