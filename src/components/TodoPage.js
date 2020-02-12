@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { token$, updateToken } from './Store';
 import axios from 'axios';
 import styled from 'styled-components';
-
 import { Redirect } from 'react-router-dom';
+
 import Header from './Header.js'
 import TodoList from './TodoList.js'
 
@@ -48,22 +48,21 @@ const ButtonAdd = styled.button`
     }
 `;
 
-const LogOutDiv = styled.div`
-    height: 150px;
-    display: flex;
-    justify-content: center;
-`;
-const ButtonRegLogin = styled.button`
-    width: 100px;
+const ErrorDiv = styled.div`
     height: 30px;
-    border-radius: 8px;
-    margin: 20px;
-    background-color: #E3B427;
-    border-style: double;
-    font-family: 'Patrick Hand', cursive;
-    :hover {
-        cursor: pointer;
-    }
+`;
+
+const ErrorP = styled.p`
+    color: red;
+    margin: 0px;
+`;
+
+const LogOutDiv = styled.div`
+    height: 100px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    margin-left: -170px;
 `;
 
 //<---Styling ending--->
@@ -76,6 +75,7 @@ export default class Home extends React.Component {
             content: "",
             token: token$.value,
             redirect: false,
+            error: 0,
         };
         this.deleteAxios = this.deleteAxios.bind(this);
         this.getAxios = this.getAxios.bind(this);
@@ -137,7 +137,11 @@ export default class Home extends React.Component {
     }
 
     handleChange(e) {
-        this.setState({ content: e.target.value })
+        this.setState
+        ({ 
+            content: e.target.value,
+            error: 0 
+        })
     }
     handleLogout() {
         updateToken(null);
@@ -145,11 +149,18 @@ export default class Home extends React.Component {
     }
     handleSubmit(e) {
         e.preventDefault();
-        this.postAxios();
-        this.setState({ content: "" })
-    }
+        if (this.state.content.replace(/ /g, "")) { //  Om det finns ett mellanslag omvanldas den till tom sträng som ej skickas upp till servern(inställt på server)
+                this.postAxios();
+                console.log('TOM');
+            } else {
+                this.setState({ error: 1 })
+            }
+
+            this.setState({ content: "" })
+        }
 
     render() {
+
         return (
             <div>
                 <div>
@@ -167,6 +178,11 @@ export default class Home extends React.Component {
                         onChange={this.handleChange} />
                     <ButtonAdd type="submit">Add todo</ButtonAdd>
                 </form>
+                <ErrorDiv>
+                {
+                    this.state.error === 1 && <ErrorP>Ooops...you didn't enter anything..</ErrorP>
+                }
+                </ErrorDiv>
                 <TodoList
                     todoList={this.state.todoList}
                     deleteAxios={this.deleteAxios} />

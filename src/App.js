@@ -17,7 +17,7 @@ const DivContainer = styled.div`
 
 const DivApp = styled.div`
   margin-top: 20px;
-  width: 400px;
+  min-width: 90%;
   height: 600px;
   border: 2px #FDDE2B;
   border-style: dashed;

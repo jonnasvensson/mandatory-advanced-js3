@@ -4,11 +4,11 @@ import Header from './Header'
 
 
 //<---Styling--->
-const Inputfield = styled.input`
+const InputField = styled.input`
     width: 200px;
     height: 30px;
     border-radius: 8px;
-    margin: 20px;
+    margin: 10px;
     border-style: double;
     border-color: #E3B427;
     font-family: 'Shadows Into Light', cursive;
@@ -16,7 +16,7 @@ const Inputfield = styled.input`
     ::placeholder{ color: black }
 `;
 
-const InputField = styled.input`
+const InputFieldButton = styled.input`
     width: 300px;
     height: 50px;
     border-radius: 8px;
@@ -35,7 +35,7 @@ export default function Form(props) {
         <>
             <form onSubmit={props.handleSubmit}>
                 <div>
-                    <Inputfield
+                    <InputField
                         placeholder="Email"
                         type="email"
                         name="email"
@@ -46,7 +46,7 @@ export default function Form(props) {
                     />
                 </div>
                 <div>
-                    <Inputfield
+                    <InputField
                         placeholder="Password"
                         type="password"
                         name="password"
@@ -56,7 +56,7 @@ export default function Form(props) {
                         onChange={props.handleChange}
                     />
                 </div>
-                <InputField
+                <InputFieldButton
                     type="submit"
                     value={props.submitButtonText} />
             </form>

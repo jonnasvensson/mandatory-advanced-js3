@@ -3,16 +3,19 @@ import jwt from 'jsonwebtoken';
 import styled from 'styled-components';
 
 //<---Styling--->
-const H2inHeader = styled.h1`
+const H1inHeader = styled.h1`
     font-family: 'Zhi Mang Xing', cursive;
     font-size: 80px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     color: #FAB436;
 `;
 const PinHeader = styled.p`
     font-family: 'Caveat', cursive;
     font-size: 30px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
 `;
 //<---Styling ending--->
 
@@ -35,14 +38,14 @@ export default class Header extends React.Component {
             })
         }
     }
-    handleClick(e) {        
+    handleClick(e) {
         this.setState({ login: true })
     }
 
     render() {
         return (
             <div>
-                <H2inHeader>{this.props.headerText}</H2inHeader>
+                <H1inHeader>{this.props.headerText}</H1inHeader>
                 <PinHeader>{this.state.decodedEmail}</PinHeader>
             </div >
         )

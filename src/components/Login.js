@@ -4,9 +4,30 @@ import axios from 'axios';
 import { token$, updateToken } from './Store';
 import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom'
+import styled from 'styled-components';
 
 import Header from './Header'
 import Form from './Form'
+
+//<---<Styling--->
+const ErrorDiv = styled.div`
+    height: 30px;
+`;
+
+const ErrorP = styled.p`
+    color: red;
+    margin: 0px;
+`;
+
+const Bottomdiv = styled.div`
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    bottom: 10px;
+`;
+//<---Styling ending--->
+
 
 const API_ROOT = "http://3.120.96.16:3002/";
 
@@ -46,7 +67,7 @@ export default class Login extends React.Component {
                 updateToken(response.data.token);
             })
             .catch(err => {
-                console.log(err);
+                console.log(err.response.data);
                 this.setState({ error: true })
             })
     }
@@ -75,17 +96,21 @@ export default class Login extends React.Component {
                         <title>Log in</title>
                     </Helmet>
                 </div>
-                <Header 
-                headerText="Todo" />
+                <Header
+                    headerText="Todo" />
                 <Form
                     handleSubmit={this.handleSubmit}
                     handleChange={this.handleChange}
                     email={this.state.email}
                     submitButtonText="Log in"
                 />
-                {this.state.token && <Redirect to='/todopage' />}
-                {this.state.error && <p>Invalid login, pls try again!</p>}
-                <p onClick={this.handleClick}><Link to='/register'>Click here </Link>to register</p>
+                {this.state.token && <Redirect to='/' />}
+                <ErrorDiv>
+                    {this.state.error && <ErrorP>Invalid login, pls try again!</ErrorP>}
+                </ErrorDiv>
+                <Bottomdiv>
+                    <p onClick={this.handleClick}><Link to='/register'>Click here </Link>to register</p>
+                </Bottomdiv>
             </div>
         )
     }
